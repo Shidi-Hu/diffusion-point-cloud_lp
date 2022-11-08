@@ -34,14 +34,14 @@ def normalize_point_clouds(pcs, mode, logger):
 
 
 # Arguments
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser()                                                #该argparse模块使编写用户友好的命令行界面变得容易
 parser.add_argument('--ckpt', type=str, default='./pretrained/GEN_airplane.pt')
 parser.add_argument('--categories', type=str_list, default=['airplane'])
 parser.add_argument('--save_dir', type=str, default='./results')
 parser.add_argument('--device', type=str, default='cuda')
 # Datasets and loaders
 parser.add_argument('--dataset_path', type=str, default='./data/shapenet.hdf5')
-parser.add_argument('--batch_size', type=int, default=128)
+parser.add_argument('--batch_size', type=int, default=128)      #批处理大小
 # Sampling
 parser.add_argument('--sample_num_points', type=int, default=2048)
 parser.add_argument('--normalize', type=str, default='shape_bbox', choices=[None, 'shape_unit', 'shape_bbox'])
@@ -49,7 +49,7 @@ parser.add_argument('--seed', type=int, default=9988)
 args = parser.parse_args()
 
 
-# Logging
+# Logging         应该是日志文件
 save_dir = os.path.join(args.save_dir, 'GEN_Ours_%s_%d' % ('_'.join(args.categories), int(time.time())) )
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
@@ -59,7 +59,7 @@ for k, v in vars(args).items():
 
 # Checkpoint
 ckpt = torch.load(args.ckpt)
-seed_all(args.seed)
+seed_all(args.seed)              #set seed to all things 比如random的时候取的seed
 
 # Datasets and loaders
 logger.info('Loading datasets...')
